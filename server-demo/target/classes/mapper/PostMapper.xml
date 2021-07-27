@@ -1,0 +1,210 @@
+<!DOCTYPE mapper
+
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.practice.dao.PostDao">
+    <resultMap id="BaseResultMap" type="org.practice.model.Post" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+        <result column="image1" property="image1" jdbcType="VARCHAR" />
+        <result column="image2" property="image2" jdbcType="VARCHAR" />
+        <result column="image3" property="image3" jdbcType="VARCHAR" />
+        <result column="image4" property="image4" jdbcType="VARCHAR" />
+        <result column="image5" property="image5" jdbcType="VARCHAR" />
+        <result column="image6" property="image6" jdbcType="VARCHAR" />
+        <result column="image7" property="image7" jdbcType="VARCHAR" />
+        <result column="image8" property="image8" jdbcType="VARCHAR" />
+        <result column="image9" property="image9" jdbcType="VARCHAR" />
+        <result column="country" property="country" jdbcType="VARCHAR" />
+        <result column="province" property="province" jdbcType="VARCHAR" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="length_min" property="lengthMin" jdbcType="INTEGER" />
+        <result column="length_max" property="lengthMax" jdbcType="INTEGER" />
+        <result column="width_min" property="widthMin" jdbcType="INTEGER" />
+        <result column="width_max" property="widthMax" jdbcType="INTEGER" />
+        <result column="height_min" property="heightMin" jdbcType="INTEGER" />
+        <result column="height_max" property="heightMax" jdbcType="INTEGER" />
+        <result column="weight_min" property="weightMin" jdbcType="DOUBLE" />
+        <result column="weight_max" property="weightMax" jdbcType="DOUBLE" />
+        <result column="price" property="price" jdbcType="DECIMAL" />
+        <result column="stars" property="stars" jdbcType="INTEGER" />
+        <result column="uid" property="uid" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+        <result column="quantity" property="quantity" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="delivery" property="delivery" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="table">
+        post
+    </sql>
+
+    <sql id="all" >
+        id, type, title, description, image1, image2, image3, image4, image5, image6, image7,
+        image8, image9, country, province, city, length_min, length_max, width_min, width_max,
+        height_min, height_max, weight_min, weight_max, price, stars, uid, create_time, category_id, quantity,
+        status, delivery
+    </sql>
+
+    <select id="getCid" resultType="int" >
+        select id
+        from category
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" >
+        select
+        <include refid="all" />
+        from <include refid="table"/>
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="select" resultMap="BaseResultMap" >
+        select
+        *
+        FROM <include refid="table"/>
+        order by id desc
+        limit 0, 1
+    </select>
+
+    <select id="selectTen" resultMap="BaseResultMap" >
+        select
+        *
+        FROM <include refid="table"/>
+        order by id desc
+        limit 0, 10
+    </select>
+
+    <select id="selectByStar" resultMap="BaseResultMap" >
+        select
+        *
+        FROM <include refid="table"/>
+        order by stars desc
+        limit 0, 10
+    </select>
+
+    <select id="getCounts" resultType="java.lang.Integer">
+        select count(id)
+        from <include refid="table"/>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from <include refid="table"/>
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="org.practice.model.Post" >
+        insert into <include refid="table"/> (type, title, description, image1, image2, image3, image4, image5, image6, image7,
+        image8, image9, country, province, city, length_min, length_max, width_min, width_max,
+        height_min, height_max, weight_min, weight_max, price, stars, uid, category_id, quantity,
+        status, delivery)
+        values (#{type,jdbcType=VARCHAR},
+        #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+        #{image1,jdbcType=VARCHAR}, #{image2,jdbcType=VARCHAR}, #{image3,jdbcType=VARCHAR},
+        #{image4,jdbcType=VARCHAR}, #{image5,jdbcType=VARCHAR}, #{image6,jdbcType=VARCHAR},
+        #{image7,jdbcType=VARCHAR}, #{image8,jdbcType=VARCHAR}, #{image9,jdbcType=VARCHAR},
+        #{country,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR},
+        #{lengthMin,jdbcType=INTEGER}, #{lengthMax,jdbcType=INTEGER},
+        #{widthMin,jdbcType=INTEGER}, #{widthMax,jdbcType=INTEGER},
+        #{heightMin,jdbcType=INTEGER}, #{heightMax,jdbcType=INTEGER},
+        #{weightMin,jdbcType=INTEGER}, #{weightMax,jdbcType=INTEGER},
+        #{price,jdbcType=DECIMAL}, #{stars,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER},
+        #{categoryId,jdbcType=INTEGER},
+        #{quantity,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR},
+        #{delivery,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="org.practice.model.Post" >
+        update
+        <include refid="table"/>
+        set type = #{type, jdbcType=VARCHAR},
+        title = #{title,jdbcType=VARCHAR},
+        description = #{description,jdbcType=VARCHAR},
+        image1 = #{image1,jdbcType=VARCHAR},
+        image2 = #{image2,jdbcType=VARCHAR},
+        image3 = #{image3,jdbcType=VARCHAR},
+        image4 = #{image4,jdbcType=VARCHAR},
+        image5 = #{image5,jdbcType=VARCHAR},
+        image6 = #{image6,jdbcType=VARCHAR},
+        image7 = #{image7,jdbcType=VARCHAR},
+        image8 = #{image8,jdbcType=VARCHAR},
+        image9 = #{image9,jdbcType=VARCHAR},
+        country = #{country,jdbcType=VARCHAR},
+        province = #{province,jdbcType=VARCHAR},
+        city = #{city,jdbcType=VARCHAR},
+        length_min = #{lengthMin,jdbcType=INTEGER},
+        length_max = #{lengthMax,jdbcType=INTEGER},
+        width_min = #{widthMin,jdbcType=INTEGER},
+        width_max = #{widthMax,jdbcType=INTEGER},
+        height_min = #{heightMin,jdbcType=INTEGER},
+        height_max = #{heightMax,jdbcType=INTEGER},
+        weight_min = #{weightMin,jdbcType=DOUBLE},
+        weight_max = #{weightMax,jdbcType=DOUBLE},
+        price = #{price,jdbcType=DECIMAL},
+        stars = #{stars,jdbcType=INTEGER},
+        uid = #{uid,jdbcType=INTEGER},
+        category_id = #{categoryId,jdbcType=INTEGER},
+        quantity = #{quantity,jdbcType=INTEGER},
+        status = #{status,jdbcType=VARCHAR},
+        delivery = #{delivery,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectAllSatisfied" parameterType="org.practice.model.QueryPost" resultMap="BaseResultMap">
+        select *
+        from post
+        <!--连表查询-->
+        where type = #{type, jdbcType=VARCHAR}
+        <!--编写动态sql部分-->
+        <trim>
+            <if test="appendedCid != null and appendedCid !=''">
+                and #{appendedCid} like CONCAT("%,", category_id, ",%")
+            </if>
+            <if test="delivery != null and delivery !=''">
+                and delivery = #{delivery}
+            </if>
+            <if test="quantity != null and quantity !=''">
+                and quantity = #{quantity}
+            </if>
+            <if test="lengthMin != null and lengthMin !=''">
+                and length_min<![CDATA[>=]]> #{lengthMin}
+            </if>
+            <if test="lengthMax != null and lengthMax !=''">
+                and length_max<![CDATA[<=]]> #{lengthMax}
+            </if>
+            <if test="widthMin != null and widthMin !=''">
+                and width_min<![CDATA[>=]]> #{widthMin}
+            </if>
+            <if test="widthMax != null and widthMax !=''">
+                and width_max<![CDATA[<=]]> #{widthMax}
+            </if>
+            <if test="heightMin != null and heightMin !=''">
+                and height_min<![CDATA[>=]]> #{heightMin}
+            </if>
+            <if test="heightMax != null and heightMax !=''">
+                and height_max<![CDATA[<=]]> #{heightMax}
+            </if>
+            <if test="weightMin != null and weightMin !=''">
+                and weight_min<![CDATA[>=]]> #{weightMin}
+            </if>
+            <if test="weightMax != null and weightMax !=''">
+                and weight_max<![CDATA[<=]]> #{weightMax}
+            </if>
+            <if test="priceMax != null and priceMax !=''">
+                and price<![CDATA[<=]]> #{priceMax}
+            </if>
+            <if test="priceMin != null and priceMin !=''">
+                and price<![CDATA[>=]]> #{priceMin}
+            </if>
+
+        </trim>
+    </select>
+
+
+
+</mapper>

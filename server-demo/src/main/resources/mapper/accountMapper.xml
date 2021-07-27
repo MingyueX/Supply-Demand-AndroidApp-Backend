@@ -1,0 +1,39 @@
+<!DOCTYPE mapper
+
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.practice.dao.AccountDao">
+
+    <sql id="table">
+        useraccount
+    </sql>
+
+    <select id="getById" parameterType="Integer" resultType="org.practice.model.Account">
+
+        SELECT id, username, password, avatar, userId FROM <include refid="table"/> where id=#{id}
+
+    </select>
+
+    <select id="getByName" parameterType="String" resultType="org.practice.model.Account">
+
+        SELECT id, username, password, avatar, userId FROM <include refid="table"/> where username=#{username}
+
+    </select>
+
+    <insert id="add" parameterType="org.practice.model.Account">
+        INSERT INTO <include refid="table"/> (username,password) VALUES (#{username},#{password})
+    </insert>
+
+    <update id="updateAvatarByPrimaryKey" parameterType="org.practice.model.Account">
+        update <include refid="table"/>
+        set avatar = #{avatar} where id = #{id}
+    </update>
+
+    <update id="updateUsernameByPrimaryKey" parameterType="org.practice.model.Account">
+        update <include refid="table"/>
+        set username = #{username} where id = #{id}
+    </update>
+
+</mapper>

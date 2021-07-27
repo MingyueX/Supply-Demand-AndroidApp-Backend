@@ -1,0 +1,19 @@
+<!DOCTYPE mapper
+
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.practice.dao.CategoryDao">
+
+    <sql id="table">
+        category
+    </sql>
+
+    <select id="getCid" parameterType="String" resultType="int">
+
+        SELECT id FROM <include refid="table"/> where name = #{name}
+
+    </select>
+
+</mapper>
